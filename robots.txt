@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ibrahimhalilyildiz.com.tr/sitemap.xml

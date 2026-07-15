@@ -1112,7 +1112,7 @@
           </div>
           <div class="hero-metric">
             <strong>Dosya odaklı takip</strong>
-            <span>Başvurular Lead Merkezi panelinde düzenlenir.</span>
+            <span>Başvurular e-posta, WhatsApp ve takip tablosu ile düzenlenir.</span>
           </div>
         </div>
         <div class="hero-actions">
@@ -1275,7 +1275,7 @@
           </div>
           <div class="feature">
             <strong>Akıllı takip</strong>
-            <span>Başvurular Lead Merkezi panelinde önceliklendirilir.</span>
+            <span>Başvurular büro takip tablosunda önceliklendirilir.</span>
           </div>
         </div>
       </div>
@@ -1322,7 +1322,7 @@
         <div>
           <div class="section-head">
             <h2>Sesli Soru</h2>
-            <p>Her dilde soru sorabilirsiniz. Ses metne çevrildikten sonra Lead Merkezi paneline kayıt olarak düşer.</p>
+            <p>Her dilde soru sorabilirsiniz. Ses metne çevrilir; e-posta veya WhatsApp üzerinden büroya iletilir.</p>
           </div>
           <div class="language-note">
             Ses tanıma desteği kullanılan tarayıcıya göre değişebilir. Mikrofon çalışmazsa soru aynı alana yazılı olarak girilebilir.
@@ -1411,7 +1411,7 @@
         <div class="request-info">
           <div class="section-head">
             <h2>Ön Başvuru</h2>
-            <p>Formu doldurduğunuzda bilgiler yerel Lead Merkezi paneline kaydedilir ve başvuru konusu için takip kaydı oluşur.</p>
+            <p>Formu doldurduğunuzda bilgiler e-posta taslağına aktarılır; büro içinde takip tablosuna kaydedilerek başvuru süreci izlenir.</p>
           </div>
           <div class="contact-line">
             <small>Telefon</small>
@@ -1895,7 +1895,7 @@
       if (recognition) recognition.stop();
       voiceForm.reset();
       voiceTranscript = "";
-      setVoiceStatus("Sesli sorunuz kaydedildi. Lead Merkezi panelinde görünecek.", true);
+      setVoiceStatus("Sesli sorunuz e-posta taslağına aktarıldı. Lütfen açılan iletiyi gönderin.", true);
     });
 
     form.addEventListener("submit", (event) => {
@@ -1955,7 +1955,7 @@
       });
       renderSelectedDocuments();
       document.getElementById("urgency").value = "week";
-      formStatus.textContent = "Başvurunuz kaydedildi. En kısa sürede iletişime geçilecektir.";
+      formStatus.textContent = "Başvuru e-posta taslağına aktarıldı. Lütfen açılan iletiyi gönderin; en kısa sürede dönüş yapılacaktır.";
     });
   </script>
 </body>
