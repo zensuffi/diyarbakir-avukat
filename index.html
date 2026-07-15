@@ -1216,7 +1216,7 @@
           <span class="upload-title">En fazla 3 belge seçin</span>
           <label class="file-trigger" for="topDocuments">3 belge seç</label>
           <input id="topDocuments" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
-          <span class="upload-help">Bu site güvenlik nedeniyle dosyanın kendisini saklamaz. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB ve toplam 3 belge sınırı vardır.</span>
+          <span class="upload-help">Başvuruyu gönderdiğinizde seçilen belgeler değerlendirme kanalına aktarılır. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB ve toplam 3 belge sınırı vardır.</span>
           <ul id="topFileList" class="file-list"></ul>
           <div class="hero-actions" style="margin-top: 12px;">
             <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
@@ -1561,7 +1561,7 @@
               <span class="upload-title">En önemli 3 belge</span>
               <label class="file-trigger" for="documents">3 belge seç</label>
               <input id="documents" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
-              <span class="upload-help">En fazla 3 dosya seçin. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB sınırı vardır. Şüpheli veya ilgisiz dosyalar değerlendirmeye alınmaz.</span>
+              <span class="upload-help">En fazla 3 belge seçin. Başvuruyu gönderdiğinizde belgeler kayıtla birlikte iletilir. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB sınırı vardır.</span>
               <ul id="fileList" class="file-list"></ul>
               <div class="hero-actions" style="margin-top: 12px;">
                 <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
@@ -1771,6 +1771,7 @@
 
   <script>
     const STORAGE_KEY = "leadMerkezi.v1";
+    const DRIVE_UPLOAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbw4oVqq8Y3e0YlhiJK44pjt1Bcdow8HyZ3GqToKsi8J4WAGXUZfVQnO7GU-wHBww2_iMQ/exec";
     const topics = [
       "Kamulaştırma davaları",
       "Ceza hukuku",
@@ -1798,6 +1799,15 @@
     const MAX_DOCUMENTS = 3;
     const MAX_DOCUMENT_SIZE = 10 * 1024 * 1024;
     const ALLOWED_DOCUMENT_EXTENSIONS = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png", ".webp"];
+    const DOCUMENT_MIME_TYPES = {
+      ".pdf": "application/pdf",
+      ".doc": "application/msword",
+      ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ".jpg": "image/jpeg",
+      ".jpeg": "image/jpeg",
+      ".png": "image/png",
+      ".webp": "image/webp"
+    };
     let recognition = null;
     let voiceTranscript = "";
     let selectedDocuments = [];
@@ -1824,6 +1834,10 @@
       const state = loadState();
       state.leads.unshift(lead);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function hasDriveUploadEndpoint() {
+      return /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/i.test(DRIVE_UPLOAD_ENDPOINT.trim());
     }
 
     function openMailDraft(subject, lines) {
@@ -1884,6 +1898,10 @@
       return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
     }
 
+    function selectedDocumentRecords() {
+      return selectedDocuments.map(({ key, name, size, type }) => ({ key, name, size, type }));
+    }
+
     function renderSelectedDocuments() {
       const markup = selectedDocuments.map((file) => `
         <li>
@@ -1903,6 +1921,10 @@
       const normalized = String(fileName || "").toLowerCase();
       const dotIndex = normalized.lastIndexOf(".");
       return dotIndex >= 0 ? normalized.slice(dotIndex) : "";
+    }
+
+    function mimeTypeFromName(fileName) {
+      return DOCUMENT_MIME_TYPES[getDocumentExtension(fileName)] || "";
     }
 
     function isAllowedDocument(file) {
@@ -1939,7 +1961,8 @@
             key,
             name: file.name,
             size: file.size,
-            type: file.type || "Bilinmiyor"
+            type: file.type || mimeTypeFromName(file.name) || "application/octet-stream",
+            file
           });
           addedCount += 1;
         });
@@ -1974,6 +1997,47 @@
     document.querySelectorAll("[data-doc-send='email']").forEach((button) => {
       button.addEventListener("click", openDocumentEmail);
     });
+
+    function fileToPayload(doc) {
+      return new Promise((resolve, reject) => {
+        if (!doc.file) {
+          resolve(null);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("Belge okunamadı."));
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          resolve({
+            name: doc.name,
+            size: doc.size,
+            type: doc.type || mimeTypeFromName(doc.name),
+            base64: result.includes(",") ? result.split(",").pop() : result
+          });
+        };
+        reader.readAsDataURL(doc.file);
+      });
+    }
+
+    async function selectedDocumentPayloads() {
+      const payloads = await Promise.all(selectedDocuments.map(fileToPayload));
+      return payloads.filter(Boolean);
+    }
+
+    async function sendLeadToDrive(lead) {
+      const files = await selectedDocumentPayloads();
+      await fetch(DRIVE_UPLOAD_ENDPOINT.trim(), {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          ...lead,
+          files
+        })
+      });
+    }
 
     function setVoiceStatus(message, isOk = false) {
       voiceStatus.textContent = message;
@@ -2100,8 +2164,9 @@
       setVoiceStatus("Sesli sorunuz e-posta taslağına aktarıldı. Lütfen açılan iletiyi gönderin.", true);
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      const submitButton = form.querySelector("button[type='submit']");
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -2121,7 +2186,7 @@
         return;
       }
 
-      saveLead({
+      const lead = {
         id: uid(),
         name,
         phone,
@@ -2136,12 +2201,37 @@
         urgencyLabel,
         scope: scopeFromTopic(topic),
         notes,
-        documents: selectedDocuments,
+        documents: selectedDocumentRecords(),
         consent,
         truthConsent,
         status: "Yeni",
         createdAt: new Date().toISOString()
-      });
+      };
+
+      if (hasDriveUploadEndpoint()) {
+        try {
+          if (submitButton) submitButton.disabled = true;
+          formStatus.textContent = "Başvuru ve belgeler gönderiliyor. Lütfen pencereyi kapatmayın.";
+          await sendLeadToDrive(lead);
+          saveLead(lead);
+          form.reset();
+          selectedDocuments = [];
+          documentInputs.forEach((input) => {
+            input.value = "";
+          });
+          renderSelectedDocuments();
+          document.getElementById("urgency").value = "week";
+          document.getElementById("caseStage").value = "review";
+          formStatus.textContent = "Başvuru ve belgeler alındı. En kısa sürede dosya ön değerlendirmesi için dönüş yapılacaktır.";
+          return;
+        } catch (error) {
+          formStatus.textContent = "Belge gönderimi tamamlanamadı. Lütfen belgeleri WhatsApp veya e-posta ile gönderin.";
+        } finally {
+          if (submitButton) submitButton.disabled = false;
+        }
+      }
+
+      saveLead(lead);
 
       openMailDraft("Web sitesi ön başvuru", [
         `Ad soyad: ${name}`,
@@ -2157,7 +2247,7 @@
         notes,
         "",
         selectedDocuments.length ? "Seçilen belgeler:" : "Seçilen belge: Yok",
-        ...selectedDocuments.map((doc) => `- ${doc.name} (${formatFileSize(doc.size)})`),
+        ...selectedDocumentRecords().map((doc) => `- ${doc.name} (${formatFileSize(doc.size)})`),
         "",
         "KVKK/onay: Evet",
         "Beyan doğruluğu onayı: Evet"
