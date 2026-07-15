@@ -1171,7 +1171,7 @@
         <label class="upload-box">
           En fazla 3 belge seçin
           <input id="topDocuments" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
-          <span class="upload-help">Bu site güvenlik nedeniyle dosyanın kendisini saklamaz. Belgeleri hemen görebilmemiz için seçimden sonra WhatsApp veya e-posta ile gerçek evrakı ekleyin.</span>
+          <span class="upload-help">Bu site güvenlik nedeniyle dosyanın kendisini saklamaz. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB ve toplam 3 belge sınırı vardır.</span>
           <ul id="topFileList" class="file-list"></ul>
           <div class="hero-actions" style="margin-top: 12px;">
             <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
@@ -1515,7 +1515,7 @@
             <label class="full upload-box">
               En önemli 3 belge
               <input id="documents" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
-              <span class="upload-help">En fazla 3 dosya seçin. Örn: tebligat/dava/icra evrakı, sözleşme/tapu/ödeme belgesi, tutanak/mesajlaşma/fotoğraf. Gerçek evrakı hemen görebilmemiz için aşağıdaki WhatsApp veya e-posta butonuyla dosyaları ekleyerek gönderin.</span>
+              <span class="upload-help">En fazla 3 dosya seçin. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB sınırı vardır. Şüpheli veya ilgisiz dosyalar değerlendirmeye alınmaz.</span>
               <ul id="fileList" class="file-list"></ul>
               <div class="hero-actions" style="margin-top: 12px;">
                 <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
@@ -1586,6 +1586,10 @@
           <details open>
             <summary>Sesli soru göndermek güvenli mi?</summary>
             <p>Sesli soru için ayrıca KVKK onayı alınır. Sistem ses dosyasını kalıcı olarak saklamak yerine konuşmayı metne çevirir; metin başvuru takibi ve iletişim amacıyla kullanılır. Çok hassas bilgi içeren durumlarda doğrudan telefonla görüşmek daha uygundur.</p>
+          </details>
+          <details open>
+            <summary>Belge göndermek güvenli mi?</summary>
+            <p>Site dosyaları kalıcı olarak saklamaz; belge gönderimi e-posta veya WhatsApp üzerinden yapılır. Güvenlik için yalnızca PDF, Word ve görsel dosyaları kabul edilir, dosya başına 10 MB ve toplam 3 belge sınırı uygulanır. Şüpheli, ilgisiz veya kötü amaçlı görünen dosyalar açılmadan silinir ya da başvurudan ayrı tutulur.</p>
           </details>
           <details open>
             <summary>Telefonla her bilgi talebine hemen cevap veriliyor mu?</summary>
@@ -1685,6 +1689,14 @@
         },
         {
           "@type": "Question",
+          "name": "Belge göndermek güvenli mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Site dosyaları kalıcı olarak saklamaz; belge gönderimi e-posta veya WhatsApp üzerinden yapılır. Güvenlik için yalnızca PDF, Word ve görsel dosyaları kabul edilir, dosya başına 10 MB ve toplam 3 belge sınırı uygulanır. Şüpheli, ilgisiz veya kötü amaçlı görünen dosyalar açılmadan silinir ya da başvurudan ayrı tutulur."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Telefonla her bilgi talebine hemen cevap veriliyor mu?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -1737,6 +1749,9 @@
     const documentInputs = [document.getElementById("topDocuments"), document.getElementById("documents")].filter(Boolean);
     const fileLists = [document.getElementById("topFileList"), document.getElementById("fileList")].filter(Boolean);
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const MAX_DOCUMENTS = 3;
+    const MAX_DOCUMENT_SIZE = 10 * 1024 * 1024;
+    const ALLOWED_DOCUMENT_EXTENSIONS = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png", ".webp"];
     let recognition = null;
     let voiceTranscript = "";
     let selectedDocuments = [];
@@ -1832,16 +1847,28 @@
       });
     }
 
+    function getDocumentExtension(fileName) {
+      const normalized = String(fileName || "").toLowerCase();
+      const dotIndex = normalized.lastIndexOf(".");
+      return dotIndex >= 0 ? normalized.slice(dotIndex) : "";
+    }
+
+    function isAllowedDocument(file) {
+      return ALLOWED_DOCUMENT_EXTENSIONS.includes(getDocumentExtension(file.name)) && file.size <= MAX_DOCUMENT_SIZE;
+    }
+
     documentInputs.forEach((input) => {
       input.addEventListener("change", () => {
         const files = Array.from(input.files || []);
-        selectedDocuments = files.slice(0, 3).map((file) => ({
+        const acceptedFiles = files.filter(isAllowedDocument).slice(0, MAX_DOCUMENTS);
+        const rejectedCount = files.length - acceptedFiles.length;
+        selectedDocuments = acceptedFiles.map((file) => ({
           name: file.name,
           size: file.size,
           type: file.type || "Bilinmiyor"
         }));
-        if (files.length > 3) {
-          formStatus.textContent = "En fazla 3 belge seçilebilir. İlk 3 belge alındı.";
+        if (files.length > MAX_DOCUMENTS || rejectedCount > 0) {
+          formStatus.textContent = "Yalnızca PDF, Word ve görsel dosyaları kabul edilir. En fazla 3 belge ve dosya başına 10 MB sınırı uygulanır.";
         } else {
           formStatus.textContent = selectedDocuments.length ? "Belgeler seçildi. Başvuruyu göndererek kaydedebilirsiniz." : "";
         }
