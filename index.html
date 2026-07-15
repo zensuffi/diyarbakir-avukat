@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="tr">
 <head>
   <meta charset="utf-8">
@@ -842,11 +842,32 @@
       background: #fbfcfd;
     }
 
-    .upload-box input {
-      border: 0;
-      padding: 0;
-      min-height: auto;
-      background: transparent;
+    .upload-title {
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .file-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .upload-box input[type="file"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .upload-help {
@@ -1168,8 +1189,9 @@
             <a class="btn" href="#sesli-soru">Sesli soru bırak</a>
           </div>
         </div>
-        <label class="upload-box">
-          En fazla 3 belge seçin
+        <div class="upload-box">
+          <span class="upload-title">En fazla 3 belge seçin</span>
+          <label class="file-trigger" for="topDocuments">3 belge seç</label>
           <input id="topDocuments" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
           <span class="upload-help">Bu site güvenlik nedeniyle dosyanın kendisini saklamaz. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB ve toplam 3 belge sınırı vardır.</span>
           <ul id="topFileList" class="file-list"></ul>
@@ -1177,7 +1199,7 @@
             <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
             <button class="btn" type="button" data-doc-send="email">Belgeleri e-posta ile gönder</button>
           </div>
-        </label>
+        </div>
       </div>
     </section>
 
@@ -1512,8 +1534,9 @@
               Kısa açıklama
               <textarea id="notes" required placeholder="Konu, tarih, karşı taraf, karakol/duruşma/tebligat bilgisi, elinizdeki belgeler ve beklediğiniz destek"></textarea>
             </label>
-            <label class="full upload-box">
-              En önemli 3 belge
+            <div class="full upload-box">
+              <span class="upload-title">En önemli 3 belge</span>
+              <label class="file-trigger" for="documents">3 belge seç</label>
               <input id="documents" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
               <span class="upload-help">En fazla 3 dosya seçin. Yalnızca PDF, Word ve görsel dosyaları kabul edilir; dosya başına 10 MB sınırı vardır. Şüpheli veya ilgisiz dosyalar değerlendirmeye alınmaz.</span>
               <ul id="fileList" class="file-list"></ul>
@@ -1521,7 +1544,7 @@
                 <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
                 <button class="btn" type="button" data-doc-send="email">Belgeleri e-posta ile gönder</button>
               </div>
-            </label>
+            </div>
           </div>
           <label class="checkline">
             <input id="consent" type="checkbox" required>
