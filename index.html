@@ -1145,7 +1145,7 @@
       <div class="section-inner focus-box">
         <div>
           <h3>En Önemli 3 Belgeyi Hazırlayın</h3>
-          <p>Kamulaştırma başvurularında hızlı ön değerlendirme için en kritik belgeler genellikle tebligat veya idare yazısı, tapu/ada-parsel bilgisi ve bilirkişi/emsal değer evrakıdır. Bu alan ziyaretçiye hemen güven verir ve başvuruyu daha düzenli hale getirir.</p>
+          <p>Her dava türünde hızlı ön değerlendirme için en kritik belgeler genellikle size gelen resmi evrak, uyuşmazlığın dayandığı ana belge ve iddianızı destekleyen ispat kayıtlarıdır. Bu alan ziyaretçiye hemen güven verir ve başvuruyu daha düzenli hale getirir.</p>
           <div class="hero-actions" style="margin-top: 14px;">
             <a class="btn primary" href="#basvuru">Başvuruya devam et</a>
             <a class="btn" href="#sesli-soru">Sesli soru bırak</a>
@@ -1154,8 +1154,12 @@
         <label class="upload-box">
           En fazla 3 belge seçin
           <input id="topDocuments" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
-          <span class="upload-help">Seçtiğiniz belgeler alttaki ön başvuru formuna bağlanır. Bu yerel sürümde dosya adı/türü/boyutu kaydedilir; gerçek dosya saklama için güvenli sunucu veya Drive bağlantısı gerekir.</span>
+          <span class="upload-help">Bu site güvenlik nedeniyle dosyanın kendisini saklamaz. Belgeleri hemen görebilmemiz için seçimden sonra WhatsApp veya e-posta ile gerçek evrakı ekleyin.</span>
           <ul id="topFileList" class="file-list"></ul>
+          <div class="hero-actions" style="margin-top: 12px;">
+            <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
+            <button class="btn" type="button" data-doc-send="email">Belgeleri e-posta ile gönder</button>
+          </div>
         </label>
       </div>
     </section>
@@ -1377,23 +1381,23 @@
         <div class="document-grid">
           <div class="document-card">
             <b>01</b>
-            <strong>Kamulaştırma evrakı</strong>
-            <span>Tebligat, idare yazısı, bedel tespiti evrakı, acele kamulaştırma kararı ve dava dosyası bilgilerini hazırlayın.</span>
+            <strong>Resmi evrak ve süreler</strong>
+            <span>Tebligat, dava dilekçesi, icra evrakı, idare yazısı, mahkeme kararı veya duruşma/takip bilgilerini hazırlayın.</span>
           </div>
           <div class="document-card">
             <b>02</b>
-            <strong>Tapu ve taşınmaz bilgisi</strong>
-            <span>Tapu kaydı, ada/parsel, imar durumu, fotoğraf ve taşınmazın kullanım bilgilerini ekleyin.</span>
+            <strong>Uyuşmazlığın ana belgesi</strong>
+            <span>Sözleşme, tapu kaydı, ödeme belgesi, senet, fatura, işyeri belgesi, aile veya miras evrakını ekleyin.</span>
           </div>
           <div class="document-card">
             <b>03</b>
-            <strong>Emsal değer verileri</strong>
-            <span>Yakın çevredeki satış, değerleme, bilirkişi raporu veya rayiç bedel bilgileri varsa paylaşın.</span>
+            <strong>İspat ve destek kayıtları</strong>
+            <span>Mesajlaşma, fotoğraf, video, tutanak, tanık bilgisi, rapor, bilirkişi veya emsal belgeleri varsa paylaşın.</span>
           </div>
           <div class="document-card">
             <b>04</b>
             <strong>Süre ve iletişim</strong>
-            <span>Tebligat tarihi, duruşma günü, idare adı ve dosya numarası gibi süreye bağlı bilgileri not edin.</span>
+            <span>Tebligat tarihi, duruşma günü, kurum adı, dosya numarası ve karşı taraf bilgisi gibi süreye bağlı notları hazırlayın.</span>
           </div>
         </div>
       </div>
@@ -1461,8 +1465,12 @@
             <label class="full upload-box">
               En önemli 3 belge
               <input id="documents" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple>
-              <span class="upload-help">En fazla 3 dosya seçin. Örn: kamulaştırma tebligatı, tapu kaydı, bilirkişi raporu veya idare yazısı. Bu yerel sürümde belge adı/türü/boyutu panele kaydedilir; gerçek dosya saklama için güvenli sunucu veya Drive bağlantısı gerekir.</span>
+              <span class="upload-help">En fazla 3 dosya seçin. Örn: tebligat/dava/icra evrakı, sözleşme/tapu/ödeme belgesi, tutanak/mesajlaşma/fotoğraf. Gerçek evrakı hemen görebilmemiz için aşağıdaki WhatsApp veya e-posta butonuyla dosyaları ekleyerek gönderin.</span>
               <ul id="fileList" class="file-list"></ul>
+              <div class="hero-actions" style="margin-top: 12px;">
+                <button class="btn primary" type="button" data-doc-send="whatsapp">Belgeleri WhatsApp'ta gönder</button>
+                <button class="btn" type="button" data-doc-send="email">Belgeleri e-posta ile gönder</button>
+              </div>
             </label>
           </div>
           <label class="checkline">
@@ -1511,23 +1519,23 @@
         <div class="faq-grid">
           <details open>
             <summary>Başvuru formu avukatlık ilişkisi kurar mı?</summary>
-            <p>Hayır. Form veya sesli soru yalnızca ön değerlendirme kaydı oluşturur. Avukatlık ilişkisi görüşme ve kabul süreci tamamlandıktan sonra kurulur.</p>
+            <p>Hayır. Form, belge bildirimi veya sesli soru yalnızca ön değerlendirme kaydı oluşturur. Avukatlık ilişkisi; dosyanın incelenmesi, görüşme yapılması ve kabul sürecinin tamamlanmasından sonra kurulur.</p>
           </details>
-          <details>
+          <details open>
             <summary>Hangi belgeleri hazırlamalıyım?</summary>
-            <p>Tebligat, sözleşme, ödeme belgesi, tutanak, mesajlaşma, dava veya icra evrakı gibi konuya ilişkin tüm belgeler ilk değerlendirmeyi kolaylaştırır.</p>
+            <p>Her dosya için önce üç temel belge hazırlanmalıdır: size gelen resmi evrak, uyuşmazlığın dayandığı ana belge ve iddianızı destekleyen kayıtlar. Örneğin tebligat, dava veya icra evrakı, sözleşme, tapu, ödeme belgesi, tutanak, mesajlaşma, fotoğraf ya da rapor ilk değerlendirmeyi hızlandırır.</p>
           </details>
-          <details>
+          <details open>
             <summary>Kamulaştırma davası için hangi belgeler gerekir?</summary>
-            <p>Kamulaştırma tebligatı, tapu kaydı, ada/parsel bilgisi, idare yazıları, bilirkişi raporu, emsal satış bilgileri ve varsa dava dosya numarası ilk değerlendirmede önemlidir.</p>
+            <p>Kamulaştırma dosyalarında tebligat veya idare yazısı, tapu kaydı, ada/parsel bilgisi, bedel tespiti evrakı, bilirkişi raporu, emsal satış bilgileri ve varsa dava dosya numarası önemlidir. Tebligat tarihi ayrıca süre hesabı için mutlaka belirtilmelidir.</p>
           </details>
-          <details>
+          <details open>
             <summary>Sesli soru göndermek güvenli mi?</summary>
-            <p>Sesli soru için ayrıca KVKK onayı alınır. Kayıt, başvuru takibi ve iletişim amacıyla yerel Lead Merkezi paneline aktarılır.</p>
+            <p>Sesli soru için ayrıca KVKK onayı alınır. Sistem ses dosyasını kalıcı olarak saklamak yerine konuşmayı metne çevirir; metin başvuru takibi ve iletişim amacıyla kullanılır. Çok hassas bilgi içeren durumlarda doğrudan telefonla görüşmek daha uygundur.</p>
           </details>
-          <details>
+          <details open>
             <summary>Acil durumlarda ne yapmalıyım?</summary>
-            <p>Süre, ifade, duruşma veya tebligat gibi acil durumlarda formun yanında telefon veya WhatsApp üzerinden doğrudan iletişime geçmeniz daha uygundur.</p>
+            <p>Tebligat süresi, duruşma, ifade, gözaltı, icra işlemi veya tahliye gibi acil durumlarda yalnızca form göndermekle yetinmeyin. Hemen telefon veya WhatsApp üzerinden iletişime geçin; tarih, saat, dosya numarası ve elinizdeki resmi evrakı hazır bulundurun.</p>
           </details>
         </div>
       </div>
@@ -1581,7 +1589,7 @@
           "name": "Başvuru formu avukatlık ilişkisi kurar mı?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Form veya sesli soru yalnızca ön değerlendirme kaydı oluşturur. Avukatlık ilişkisi görüşme ve kabul süreci tamamlandıktan sonra kurulur."
+            "text": "Form, belge bildirimi veya sesli soru yalnızca ön değerlendirme kaydı oluşturur. Avukatlık ilişkisi; dosyanın incelenmesi, görüşme yapılması ve kabul sürecinin tamamlanmasından sonra kurulur."
           }
         },
         {
@@ -1589,7 +1597,7 @@
           "name": "Hangi belgeleri hazırlamalıyım?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Tebligat, sözleşme, ödeme belgesi, tutanak, mesajlaşma, dava veya icra evrakı gibi konuya ilişkin belgeler ilk değerlendirmeyi kolaylaştırır."
+            "text": "Her dosya için önce üç temel belge hazırlanmalıdır: size gelen resmi evrak, uyuşmazlığın dayandığı ana belge ve iddianızı destekleyen kayıtlar. Örneğin tebligat, dava veya icra evrakı, sözleşme, tapu, ödeme belgesi, tutanak, mesajlaşma, fotoğraf ya da rapor ilk değerlendirmeyi hızlandırır."
           }
         },
         {
@@ -1597,7 +1605,7 @@
           "name": "Kamulaştırma davası için hangi belgeler gerekir?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Kamulaştırma tebligatı, tapu kaydı, ada/parsel bilgisi, idare yazıları, bilirkişi raporu, emsal satış bilgileri ve varsa dava dosya numarası ilk değerlendirmede önemlidir."
+            "text": "Kamulaştırma dosyalarında tebligat veya idare yazısı, tapu kaydı, ada/parsel bilgisi, bedel tespiti evrakı, bilirkişi raporu, emsal satış bilgileri ve varsa dava dosya numarası önemlidir. Tebligat tarihi ayrıca süre hesabı için mutlaka belirtilmelidir."
           }
         },
         {
@@ -1605,7 +1613,15 @@
           "name": "Sesli soru göndermek güvenli mi?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sesli soru için ayrıca KVKK onayı alınır. Kayıt, başvuru takibi ve iletişim amacıyla yerel Lead Merkezi paneline aktarılır."
+            "text": "Sesli soru için ayrıca KVKK onayı alınır. Sistem ses dosyasını kalıcı olarak saklamak yerine konuşmayı metne çevirir; metin başvuru takibi ve iletişim amacıyla kullanılır. Çok hassas bilgi içeren durumlarda doğrudan telefonla görüşmek daha uygundur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Acil durumlarda ne yapmalıyım?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tebligat süresi, duruşma, ifade, gözaltı, icra işlemi veya tahliye gibi acil durumlarda yalnızca form göndermekle yetinmeyin. Hemen telefon veya WhatsApp üzerinden iletişime geçin; tarih, saat, dosya numarası ve elinizdeki resmi evrakı hazır bulundurun."
           }
         }
       ]
@@ -1672,6 +1688,41 @@
       window.location.href = href;
     }
 
+    function selectedDocumentLines() {
+      if (!selectedDocuments.length) {
+        return [
+          "- 1. belge: tebligat / idare yazısı / dava evrakı",
+          "- 2. belge: tapu / ada-parsel / sözleşme / ödeme belgesi",
+          "- 3. belge: bilirkişi raporu / emsal belge / tutanak / mesajlaşma"
+        ];
+      }
+      return selectedDocuments.map((doc, index) => `- ${index + 1}. belge: ${doc.name} (${formatFileSize(doc.size)})`);
+    }
+
+    function documentShareLines() {
+      return [
+        "Merhaba, ön değerlendirme için en önemli 3 belgeyi göndermek istiyorum.",
+        "",
+        "Seçilen / gönderilecek belgeler:",
+        ...selectedDocumentLines(),
+        "",
+        "Not: Lütfen bu mesajdan sonra gerçek dosyaları ekleyerek gönderin."
+      ];
+    }
+
+    function openDocumentWhatsapp() {
+      const text = encodeURIComponent(documentShareLines().join("\n"));
+      window.open(`https://wa.me/905336529075?text=${text}`, "_blank", "noopener");
+    }
+
+    function openDocumentEmail() {
+      openMailDraft("Ön değerlendirme belgeleri", [
+        ...documentShareLines(),
+        "",
+        "E-posta gönderirken belgeleri ek dosya olarak ekleyiniz."
+      ]);
+    }
+
     function escapeHtml(value) {
       return String(value || "").replace(/[&<>"']/g, (char) => ({
         "&": "&amp;",
@@ -1712,6 +1763,14 @@
         }
         renderSelectedDocuments();
       });
+    });
+
+    document.querySelectorAll("[data-doc-send='whatsapp']").forEach((button) => {
+      button.addEventListener("click", openDocumentWhatsapp);
+    });
+
+    document.querySelectorAll("[data-doc-send='email']").forEach((button) => {
+      button.addEventListener("click", openDocumentEmail);
     });
 
     function setVoiceStatus(message, isOk = false) {
