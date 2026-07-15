@@ -886,6 +886,7 @@
 
     .file-list li {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       gap: 10px;
       padding: 9px 10px;
@@ -897,9 +898,31 @@
       font-weight: 800;
     }
 
-    .file-list span {
+    .file-info {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .file-name {
+      overflow-wrap: anywhere;
+    }
+
+    .file-list .file-size {
       color: var(--muted);
       font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .file-remove {
+      border: 1px solid #e0a4ad;
+      border-radius: 7px;
+      background: #fff6f7;
+      color: var(--burgundy);
+      cursor: pointer;
+      font-weight: 800;
+      min-height: 32px;
+      padding: 0 10px;
       white-space: nowrap;
     }
 
@@ -1863,7 +1886,13 @@
 
     function renderSelectedDocuments() {
       const markup = selectedDocuments.map((file) => `
-        <li>${escapeHtml(file.name)}<span>${formatFileSize(file.size)}</span></li>
+        <li>
+          <span class="file-info">
+            <span class="file-name">${escapeHtml(file.name)}</span>
+            <span class="file-size">${formatFileSize(file.size)}</span>
+          </span>
+          <button class="file-remove" type="button" data-doc-remove="${file.key}">Sil</button>
+        </li>
       `).join("");
       fileLists.forEach((list) => {
         list.innerHTML = markup;
@@ -1880,21 +1909,60 @@
       return ALLOWED_DOCUMENT_EXTENSIONS.includes(getDocumentExtension(file.name)) && file.size <= MAX_DOCUMENT_SIZE;
     }
 
+    function documentKey(file) {
+      return `${String(file.name || "").toLowerCase()}-${file.size}-${file.lastModified || 0}`;
+    }
+
     documentInputs.forEach((input) => {
       input.addEventListener("change", () => {
         const files = Array.from(input.files || []);
-        const acceptedFiles = files.filter(isAllowedDocument).slice(0, MAX_DOCUMENTS);
-        const rejectedCount = files.length - acceptedFiles.length;
-        selectedDocuments = acceptedFiles.map((file) => ({
-          name: file.name,
-          size: file.size,
-          type: file.type || "Bilinmiyor"
-        }));
-        if (files.length > MAX_DOCUMENTS || rejectedCount > 0) {
-          formStatus.textContent = "Yalnızca PDF, Word ve görsel dosyaları kabul edilir. En fazla 3 belge ve dosya başına 10 MB sınırı uygulanır.";
+        let addedCount = 0;
+        let rejectedCount = 0;
+        let duplicateCount = 0;
+        let limitCount = 0;
+
+        files.forEach((file) => {
+          if (!isAllowedDocument(file)) {
+            rejectedCount += 1;
+            return;
+          }
+          const key = documentKey(file);
+          if (selectedDocuments.some((doc) => doc.key === key)) {
+            duplicateCount += 1;
+            return;
+          }
+          if (selectedDocuments.length >= MAX_DOCUMENTS) {
+            limitCount += 1;
+            return;
+          }
+          selectedDocuments.push({
+            key,
+            name: file.name,
+            size: file.size,
+            type: file.type || "Bilinmiyor"
+          });
+          addedCount += 1;
+        });
+
+        input.value = "";
+
+        if (rejectedCount || limitCount || duplicateCount) {
+          formStatus.textContent = "Yalnızca PDF, Word ve görsel dosyaları kabul edilir. Toplam 3 belge ve dosya başına 10 MB sınırı uygulanır.";
+        } else if (addedCount) {
+          formStatus.textContent = `${selectedDocuments.length} belge seçildi. İsterseniz belge silebilir veya başvuruyu gönderebilirsiniz.`;
         } else {
           formStatus.textContent = selectedDocuments.length ? "Belgeler seçildi. Başvuruyu göndererek kaydedebilirsiniz." : "";
         }
+        renderSelectedDocuments();
+      });
+    });
+
+    fileLists.forEach((list) => {
+      list.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-doc-remove]");
+        if (!button) return;
+        selectedDocuments = selectedDocuments.filter((doc) => doc.key !== button.dataset.docRemove);
+        formStatus.textContent = selectedDocuments.length ? `${selectedDocuments.length} belge kaldı.` : "Belge listesi temizlendi.";
         renderSelectedDocuments();
       });
     });
