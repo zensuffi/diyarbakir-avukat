@@ -3,17 +3,23 @@
 Bu etiketler başvuruları telefonda hızlı ayırmak için önerilir:
 
 - Yeni başvuru
-- Acil takip
+- Acil/süreli dosya
+- Karakol/ifade/duruşma
+- Şirket hukuku
+- Ticari sözleşme
 - Belge bekleniyor
 - Belge geldi
-- Aranacak
+- Ön değerlendirme
+- Bilgi amaçlı
+- Aranacak uygun zaman
 - Görüşme verildi
 - Dosya açıldı
 - Uygun değil
 
 Günlük pratik akış:
 
-1. Site, telefon veya WhatsApp üzerinden gelen her kişiyi Google Sheets takip tablosuna ekleyin.
-2. WhatsApp Business'ta aynı kişiye uygun etiketi verin.
-3. Sonraki takip tarihini Google Sheets'te doldurun.
-4. Gün sonunda "Acil takip" ve "Belge bekleniyor" etiketlerini kontrol edin.
+1. Telefon yerine önce konu, karşı taraf, aciliyet ve belge bilgisini isteyin.
+2. Site, WhatsApp veya e-posta üzerinden gelen somut başvuruyu Google Sheets takip tablosuna ekleyin.
+3. WhatsApp Business'ta aynı kişiye uygun etiketi verin.
+4. Belge gelmeyen veya yalnızca genel bilgi isteyen kişileri "Bilgi amaçlı" ya da "Belge bekleniyor" olarak ayırın.
+5. Gün sonunda "Acil/süreli dosya", "Karakol/ifade/duruşma" ve "Belge bekleniyor" etiketlerini kontrol edin.
