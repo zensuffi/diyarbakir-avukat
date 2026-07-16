@@ -2,8 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ibrahimhalilyildiz.com.tr/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/kamulastirma-davalari.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/sirket-hukuku.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/icra-alacak-takibi.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/ticari-alacak-uyusmazliklari.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/ceza-hukuku.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/aile-miras-hukuku.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ibrahimhalilyildiz.com.tr/kvkk-aydinlatma-metni.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
 </urlset>

@@ -494,6 +494,36 @@
       font-size: 14px;
     }
 
+    .topic-pages {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .topic-link {
+      display: grid;
+      gap: 6px;
+      min-height: 108px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topic-link strong {
+      color: var(--navy);
+      font-size: 16px;
+    }
+
+    .topic-link span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
     .band {
       background: var(--soft);
       border-block: 1px solid var(--line);
@@ -1023,6 +1053,7 @@
     @media (max-width: 980px) {
       .quick-contact,
       .services,
+      .topic-pages,
       .feature-strip,
       .document-grid,
       .profile-layout,
@@ -1080,6 +1111,7 @@
 
       .quick-contact,
       .services,
+      .topic-pages,
       .feature-strip,
       .document-grid,
       .faq-grid,
@@ -1337,6 +1369,33 @@
           </article>
         </div>
 
+        <div class="topic-pages" aria-label="Ayrıntılı hizmet sayfaları">
+          <a class="topic-link" href="kamulastirma-davalari.html">
+            <strong>Kamulaştırma Davaları</strong>
+            <span>Tapu, tebligat, bedel, bilirkişi ve emsal değer belgeleriyle ön inceleme.</span>
+          </a>
+          <a class="topic-link" href="sirket-hukuku.html">
+            <strong>Şirket Hukuku</strong>
+            <span>Şirket, ortaklık, sözleşme, temsil ve ticari risk başvuruları.</span>
+          </a>
+          <a class="topic-link" href="icra-alacak-takibi.html">
+            <strong>İcra ve Alacak</strong>
+            <span>Ödeme emri, itiraz, takip ve tahsilat dosyalarında belge kontrolü.</span>
+          </a>
+          <a class="topic-link" href="ticari-alacak-uyusmazliklari.html">
+            <strong>Ticari Alacak</strong>
+            <span>Fatura, cari hesap, sözleşme ve ödeme kayıtlarına dayalı uyuşmazlıklar.</span>
+          </a>
+          <a class="topic-link" href="ceza-hukuku.html">
+            <strong>Ceza Hukuku</strong>
+            <span>İfade, soruşturma, duruşma ve delil durumuna göre aciliyet ayrımı.</span>
+          </a>
+          <a class="topic-link" href="aile-miras-hukuku.html">
+            <strong>Aile ve Miras</strong>
+            <span>Boşanma, nafaka, velayet, miras ve tereke başvuruları.</span>
+          </a>
+        </div>
+
         <div class="feature-strip" aria-label="Site özellikleri">
           <div class="feature">
             <strong>Seçici iletişim</strong>
@@ -1442,7 +1501,7 @@
           </div>
           <label class="checkline">
             <input id="voiceKvkk" type="checkbox" required>
-            <span>Sesli soru kaydımın yazıya çevrilmesi, başvuru kaydı oluşturulması ve iletişim amacıyla işlenmesi için KVKK kapsamında açık rıza veriyorum.</span>
+            <span>Sesli soru kaydımın yazıya çevrilmesi, başvuru kaydı oluşturulması ve iletişim amacıyla işlenmesi için KVKK kapsamında açık rıza veriyorum. <a href="kvkk-aydinlatma-metni.html" target="_blank" rel="noopener">Aydınlatma metni</a></span>
           </label>
           <div class="form-actions">
             <button class="btn dark" type="submit">Sesli soruyu gönder</button>
@@ -1571,7 +1630,7 @@
           </div>
           <label class="checkline">
             <input id="consent" type="checkbox" required>
-            <span>İletişime geçilmesi ve başvuru bilgilerimin değerlendirilmesi için onay veriyorum.</span>
+            <span>İletişime geçilmesi ve başvuru bilgilerimin değerlendirilmesi için onay veriyorum. <a href="kvkk-aydinlatma-metni.html" target="_blank" rel="noopener">Aydınlatma metni</a></span>
           </label>
           <label class="checkline">
             <input id="truthConsent" type="checkbox" required>
@@ -1658,6 +1717,7 @@
     <div class="footer-inner">
       <span>© 2026 Av. İbrahim Halil Yıldız</span>
       <span><a href="mailto:av.ibrahimhalilyildiz@hotmail.com">E-posta ile iletişim</a></span>
+      <span><a href="kvkk-aydinlatma-metni.html">KVKK Aydınlatma Metni</a></span>
     </div>
   </footer>
 
